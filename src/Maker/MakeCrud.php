@@ -22,10 +22,12 @@ use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Str;
 use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
@@ -128,6 +130,12 @@ final class MakeCrud extends AbstractMaker
         $routeName = Str::asRouteName($controllerClassDetails->getRelativeNameWithoutSuffix());
         $templatesPath = Str::asFilePath($controllerClassDetails->getRelativeNameWithoutSuffix());
 
+        $testClassDetails = $generator->createClassNameDetails(
+            $entityClassDetails->getRelativeNameWithoutSuffix(),
+            'Test\\Controller\\',
+            'ControllerTest'
+        );
+
         $generator->generateController(
             $controllerClassDetails->getFullName(),
             'crud/controller/Controller.tpl.php',
@@ -147,6 +155,19 @@ final class MakeCrud extends AbstractMaker
                 ],
                 $repositoryVars
             )
+        );
+
+        $generator->generateFile(
+            'tests/Controller/'.$testClassDetails->getShortName().'.php',
+            'crud/test/Test.tpl.php',
+            [
+                'bounded_full_class_name' => $entityClassDetails->getFullName(),
+                'bounded_class_name' => $entityClassDetails->getShortName(),
+                'route_path' => Str::asRoutePath($controllerClassDetails->getRelativeNameWithoutSuffix()),
+                'route_name' => $routeName,
+                'class_name' => Str::getShortClassName($testClassDetails->getFullName()),
+                'namespace' => Str::getNamespace($testClassDetails->getFullName()),
+            ]
         );
 
         $generator->generateClass(
@@ -246,6 +267,16 @@ final class MakeCrud extends AbstractMaker
         $dependencies->addClassDependency(
             ParamConverter::class,
             'annotations'
+        );
+
+        $dependencies->addClassDependency(
+            CssSelectorConverter::class,
+            'css-selector'
+        );
+
+        $dependencies->addClassDependency(
+            Client::class,
+            'browser-kit'
         );
     }
 }
