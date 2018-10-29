@@ -67,6 +67,19 @@ class FunctionalTest extends MakerTestCase
         $this->executeMakerCommand($makerTestDetails);
     }
 
+    /**
+     * @requires PHP 7.1
+	 * @group functional_group3
+     * @dataProvider getCommandDtoTests
+     */
+    public function testDtoCommands(MakerTestDetails $makerTestDetails)
+    {
+        // entity tests are split into a different method so we can batch on appveyor
+        // this solves a weird issue where phpunit would die while running the tests
+
+        $this->executeMakerCommand($makerTestDetails);
+    }
+
     public function getCommandTests()
     {
         yield 'command' => [MakerTestDetails::createTest(
@@ -159,83 +172,6 @@ class FunctionalTest extends MakerTestCase
                 $this->assertContains('created: templates/foo/bar/cool/index.html.twig', $output);
             })
 		];
-
-		yield 'dto' => [MakerTestDetails::createTest(
-            $this->getMakerInstance(MakeDto::class),
-            [
-                'Task',
-                'Task',
-				// generate helpers
-				'yes',
-				// omit getters
-				'yes',
-            ])
-            ->addExtraDependencies('orm')
-            ->addExtraDependencies('validator')
-            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDto')
-            ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-				$this->assertContains('updated: src/Form/Data/TaskData.php', $output);
-				$this->assertContains('\\App\\Form\\Data\\TaskData', $output);
-            })
-		];
-
-        yield 'dto_getters_setters' => [MakerTestDetails::createTest(
-            $this->getMakerInstance(MakeDto::class),
-            [
-                'Task',
-				'Task',
-				// generate helpers
-				'yes',
-				// omit getters
-				'no',
-            ])
-            ->addExtraDependencies('orm')
-            ->addExtraDependencies('validator')
-            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoGettersSetters')
-            ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
-            })
-		];
-
-        yield 'dto_without_helpers' => [MakerTestDetails::createTest(
-            $this->getMakerInstance(MakeDto::class),
-            [
-                'Task',
-				'Task',
-				// generate helpers
-				'no',
-				// omit getters
-				'no',
-            ])
-            ->addExtraDependencies('orm')
-            ->addExtraDependencies('validator')
-            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoWithoutHelpers')
-            ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
-            })
-		];
-
-
-        yield 'dto_invalid_entity' => [MakerTestDetails::createTest(
-            $this->getMakerInstance(MakeDto::class),
-            [
-				'Task',
-				// bound class, can not use "Task" because invalid entity is not in autocomplete
-                '\\App\\Entity\\Task',
-				// generate helpers
-				'yes',
-				// omit getters
-				'yes',
-            ])
-            ->addExtraDependencies('orm')
-            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoInvalidEntity')
-            ->assert(function (string $output, string $directory) {
-                $this->assertContains('The bound class is not a valid doctrine entity.', $output);
-            })
-        ];
 
         yield 'fixtures' => [MakerTestDetails::createTest(
             $this->getMakerInstance(MakeFixtures::class),
@@ -1270,7 +1206,86 @@ class FunctionalTest extends MakerTestCase
             ->updateSchemaAfterCommand()
             ->setRequiredPhpVersion(70100)
         ];
-    }
+	}
+
+	public function getCommandDtoTests()
+	{
+		yield 'dto' => [MakerTestDetails::createTest(
+            $this->getMakerInstance(MakeDto::class),
+            [
+                'Task',
+                'Task',
+				// generate helpers
+				'yes',
+				// omit getters
+				'yes',
+            ])
+            ->addExtraDependencies('orm')
+            ->addExtraDependencies('validator')
+            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDto')
+            ->assert(function (string $output, string $directory) {
+                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
+				$this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+				$this->assertContains('\\App\\Form\\Data\\TaskData', $output);
+            })
+		];
+
+        yield 'dto_getters_setters' => [MakerTestDetails::createTest(
+            $this->getMakerInstance(MakeDto::class),
+            [
+                'Task',
+				'Task',
+				// generate helpers
+				'yes',
+				// omit getters
+				'no',
+            ])
+            ->addExtraDependencies('orm')
+            ->addExtraDependencies('validator')
+            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoGettersSetters')
+            ->assert(function (string $output, string $directory) {
+                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
+                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+            })
+		];
+
+        yield 'dto_without_helpers' => [MakerTestDetails::createTest(
+            $this->getMakerInstance(MakeDto::class),
+            [
+                'Task',
+				'Task',
+				// generate helpers
+				'no',
+				// omit getters
+				'no',
+            ])
+            ->addExtraDependencies('orm')
+            ->addExtraDependencies('validator')
+            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoWithoutHelpers')
+            ->assert(function (string $output, string $directory) {
+                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
+                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+            })
+		];
+
+        yield 'dto_invalid_entity' => [MakerTestDetails::createTest(
+            $this->getMakerInstance(MakeDto::class),
+            [
+				'Task',
+				// bound class, can not use "Task" because invalid entity is not in autocomplete
+                '\\App\\Entity\\Task',
+				// generate helpers
+				'yes',
+				// omit getters
+				'yes',
+            ])
+            ->addExtraDependencies('orm')
+            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoInvalidEntity')
+            ->assert(function (string $output, string $directory) {
+                $this->assertContains('The bound class is not a valid doctrine entity.', $output);
+            })
+        ];
+	}
 
     /**
      * Smoke test to make sure the DI autowiring works and all makers
