@@ -213,7 +213,6 @@ class FunctionalTest extends MakerTestCase
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
-            ->addExtraDependencies('yaml')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoValidatorYamlXml')
             ->assert(function (string $output, string $directory) {
                 $this->assertContains('created: src/Form/Data/TaskData.php', $output);
@@ -236,6 +235,25 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoWithoutHelpers')
+            ->assert(function (string $output, string $directory) {
+                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
+                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+            })
+            ->setRequiredPhpVersion(70100)
+        ];
+
+        yield 'dto_without_validations' => [MakerTestDetails::createTest(
+            $this->getMakerInstance(MakeDto::class),
+            [
+                'Task',
+                'Task',
+                // generate helpers
+                'yes',
+                // omit getters
+                'yes',
+            ])
+            ->addExtraDependencies('orm')
+            ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoWithoutValidations')
             ->assert(function (string $output, string $directory) {
                 $this->assertContains('created: src/Form/Data/TaskData.php', $output);
                 $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
