@@ -21,8 +21,7 @@
         "symfony/filesystem": "^3.4|^4.0",
         "symfony/finder": "^3.4|^4.0",
         "symfony/framework-bundle": "^3.4|^4.0",
-        "symfony/http-kernel": "^3.4|^4.0",
-        "symfony/validator": "^3.4|^4.0"
+        "symfony/http-kernel": "^3.4|^4.0"
     },
     "require-dev": {
         "allocine/twigcs": "^3.0",
@@ -31,6 +30,7 @@
         "friendsofphp/php-cs-fixer": "^2.8",
         "symfony/phpunit-bridge": "^3.4|^4.0",
         "symfony/process": "^3.4|^4.0",
+        "symfony/validator": "^3.4|^4.0",
         "symfony/yaml": "^3.4|^4.0"
     },
     "config": {

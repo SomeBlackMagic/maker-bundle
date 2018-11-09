@@ -245,7 +245,9 @@ final class MakeDto extends AbstractMaker
 
         $dependencies->addClassDependency(
             Validation::class,
-            'validator'
+            'validator',
+            // add as an optional dependency: the user *probably* wants validation
+            false
         );
     }
 
