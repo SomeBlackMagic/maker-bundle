@@ -174,9 +174,9 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDto')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('\\App\\Form\\Data\\TaskData', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
+                $this->assertContains('\\App\\Dto\\TaskData', $output);
             })
             ->setRequiredPhpVersion(70100)
         ];
@@ -195,8 +195,8 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoGettersSetters')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
             })
             ->setRequiredPhpVersion(70100)
         ];
@@ -215,8 +215,8 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoValidatorYamlXml')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
                 $this->assertContains('The entity possibly uses Yaml/Xml validators.', $output);
             })
             ->setRequiredPhpVersion(70100)
@@ -236,8 +236,8 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoWithoutHelpers')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
             })
             ->setRequiredPhpVersion(70100)
         ];
@@ -255,8 +255,8 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('orm')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoWithoutValidations')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
             })
             ->setRequiredPhpVersion(70100)
         ];
@@ -295,9 +295,9 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoMappedSuperClass')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('\\App\\Form\\Data\\TaskData', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
+                $this->assertContains('\\App\\Dto\\TaskData', $output);
             })
             ->setRequiredPhpVersion(70100)
         ];
@@ -316,9 +316,9 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoCompositeId')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('\\App\\Form\\Data\\TaskData', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
+                $this->assertContains('\\App\\Dto\\TaskData', $output);
             })
             ->setRequiredPhpVersion(70100)
         ];
@@ -337,9 +337,9 @@ class FunctionalTest extends MakerTestCase
             ->addExtraDependencies('validator')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoMissingGettersSetters')
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('updated: src/Form/Data/TaskData.php', $output);
-                $this->assertContains('\\App\\Form\\Data\\TaskData', $output);
+                $this->assertContains('created: src/Dto/TaskData.php', $output);
+                $this->assertContains('updated: src/Dto/TaskData.php', $output);
+                $this->assertContains('\\App\\Dto\\TaskData', $output);
                 $this->assertContains('The maker found missing getters/setters for properties in the entity.', $output);
             })
             ->setRequiredPhpVersion(70100)
@@ -348,10 +348,10 @@ class FunctionalTest extends MakerTestCase
         yield 'fixtures' => [MakerTestDetails::createTest(
             $this->getMakerInstance(MakeFixtures::class),
             [
-                'AppFixtures',
+                'AcmeFixtures',
             ])
             ->assert(function (string $output, string $directory) {
-                $this->assertContains('created: src/DataFixtures/AppFixtures.php', $output);
+                $this->assertContains('created: src/DataFixtures/AcmeFixtures.php', $output);
             })
         ];
 
