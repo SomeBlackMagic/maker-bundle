@@ -167,8 +167,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'yes',
+                // generate getters
+                'no',
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
@@ -188,8 +188,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'no',
+                // generate getters
+                'yes',
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
@@ -208,8 +208,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'yes',
+                // generate getters
+                'no',
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
@@ -229,8 +229,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'no',
-                // omit getters
-                'no',
+                // generate getters
+                'yes',
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
@@ -249,8 +249,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'yes',
+                // generate getters
+                'no',
             ])
             ->addExtraDependencies('orm')
             ->setFixtureFilesPath(__DIR__.'/../fixtures/MakeDtoWithoutValidations')
@@ -269,8 +269,8 @@ class FunctionalTest extends MakerTestCase
                 '\\App\\Entity\\Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'yes',
+                // generate getters
+                'no',
             ])
             ->addExtraDependencies('orm')
             ->setCommandAllowedToFail(true)
@@ -288,8 +288,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'yes',
+                // generate getters
+                'no',
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
@@ -309,8 +309,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'yes',
+                // generate getters
+                'no',
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
@@ -330,8 +330,8 @@ class FunctionalTest extends MakerTestCase
                 'Task',
                 // generate helpers
                 'yes',
-                // omit getters
-                'yes',
+                // generate getters
+                'no',
             ])
             ->addExtraDependencies('orm')
             ->addExtraDependencies('validator')
